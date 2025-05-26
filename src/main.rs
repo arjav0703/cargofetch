@@ -3,7 +3,7 @@ use std::process::Command;
 fn main() {
     println!("Welcome to rust fetch!");
     let cargo_version = get_cargo_version();
-    println!("You are using: {}", cargo_version.trim());
+    println!("You are using Cargo version: {}", cargo_version.trim());
 }
 
 fn get_cargo_version() -> String {
@@ -15,6 +15,9 @@ fn get_cargo_version() -> String {
     if output.status.success() {
         String::from_utf8_lossy(&output.stdout).to_string()
     } else {
-        panic!("Command failed: {}", String::from_utf8_lossy(&output.stderr));
+        panic!(
+            "Command failed: {}",
+            String::from_utf8_lossy(&output.stderr)
+        );
     }
 }
