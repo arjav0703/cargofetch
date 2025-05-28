@@ -6,16 +6,9 @@ pub fn get_meta() -> String {
         .arg("--format-version=1")
         .output()
         .expect("Failed to execute command");
-    
-    // todo: create a fn for this success check as it is repeated
-    if output.status.success() {
-        String::from_utf8_lossy(&output.stdout).to_string()
-    } else {
-        panic!(
-            "Command failed: {}",
-            String::from_utf8_lossy(&output.stderr)
-        );
-    }
+
+    // this will return a String
+    output_to_string(output)   
 }
 
 pub fn get_cargo_version() -> String {
@@ -23,12 +16,17 @@ pub fn get_cargo_version() -> String {
         .arg("--version")
         .output()
         .expect("Failed to execute command");
+    // this will return a String
+    output_to_string(output)
+}
+
+fn output_to_string(output: std::process::Output) -> String {
     if output.status.success() {
         String::from_utf8_lossy(&output.stdout).to_string()
     } else {
         panic!(
             "Command failed: {}",
-            String::from_utf8_lossy(&output.stdout)
+            String::from_utf8_lossy(&output.stderr)
         );
     }
 }
