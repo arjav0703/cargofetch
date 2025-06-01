@@ -3,8 +3,7 @@ use std::process::Command;
 
 pub fn get_meta() {
     let output = Command::new("cargo")
-        .arg("metadata")
-        .arg("--format-version=1")
+        .args(["metadata", "--format-version", "1", "--no-deps"])
         .output()
         .expect("Failed to execute command");
 
