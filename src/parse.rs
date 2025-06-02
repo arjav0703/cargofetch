@@ -11,7 +11,7 @@ pub fn get_meta() {
     jsonparser(output_to_string(output));
 }
 
-pub fn get_cargo_version() -> String {
+fn get_cargo_version() -> String {
     let output = Command::new("cargo")
         .arg("--version")
         .output()
@@ -37,8 +37,10 @@ fn output_to_string(output: std::process::Output) -> String {
 }
 
 fn jsonparser(json_data: String) {
+    let cargo_version = get_cargo_version();
+
     let metadata: CargoMetadata = serde_json::from_str(&json_data).expect("Failed to parse JSON");
     for package in &metadata.packages {
-        art::output(package);
+        art::handler(package, &cargo_version);
     }
 }

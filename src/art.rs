@@ -1,8 +1,9 @@
 use crate::Package;
 use owo_colors::OwoColorize;
 
-pub fn output(package: &Package) {
+pub fn handler(package: &Package, cargo_version: &String) {
     let info = [
+        format!("Cargo Version: {}", cargo_version),
         format!("Package Name:{}", package.name),
         format!("Version: {}", package.version),
         format!(
@@ -18,11 +19,10 @@ pub fn output(package: &Package) {
         .collect::<Vec<_>>()
         .join(", ");
 
-    println!("info: {:?}", &info);
     print_art(info);
 }
 
-fn print_art(info: [String; 3]) {
+fn print_art(info: [String; 4]) {
     let ascii_art = r#"
               R RRRRRRRR R          R
  R RR       R RRRRRRRRRRRRR R      RR
