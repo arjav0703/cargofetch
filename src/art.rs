@@ -2,27 +2,23 @@ use crate::Package;
 use owo_colors::OwoColorize;
 
 pub fn handler(package: &Package, cargo_version: &String) {
+    let dependencies = package.dependencies.len();
+
     let info = [
         format!("Cargo Version: {}", cargo_version),
         format!("Package Name:{}", package.name),
         format!("Version: {}", package.version),
+        format!("Dependencies: {}", dependencies),
         format!(
-            "Reposiory: {}",
+            "Repository: {}",
             package.repository.as_deref().unwrap_or("null")
         ),
     ];
 
-    let _dependencies = package
-        .dependencies
-        .iter()
-        .map(|d| d.name.clone())
-        .collect::<Vec<_>>()
-        .join(", ");
-
     print_art(info);
 }
 
-fn print_art(info: [String; 4]) {
+fn print_art(info: [String; 5]) {
     let ascii_art = r#"
               R RRRRRRRR R          R
  R RR       R RRRRRRRRRRRRR R      RR
