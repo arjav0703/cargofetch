@@ -1,6 +1,8 @@
 use serde::Deserialize;
 use std::process::Command;
 
+pub mod art;
+
 pub fn get_meta() {
     let output = Command::new("cargo")
         .args(["metadata", "--format-version", "1", "--no-deps"])
@@ -38,23 +40,8 @@ fn output_to_string(output: std::process::Output) -> String {
 fn jsonparser(json_data: String) {
     let metadata: CargoMetadata = serde_json::from_str(&json_data).expect("Failed to parse JSON");
     for package in &metadata.packages {
-        output(package);
+        art::output(package);
     }
-}
-
-fn output(package: &Package) {
-    println!(
-        "Package: {} v{}, {} dependencies: {}",
-        package.name,
-        package.version,
-        package.repository.as_deref().unwrap_or(""),
-        package
-            .dependencies
-            .iter()
-            .map(|d| d.name.clone())
-            .collect::<Vec<_>>()
-            .join(", ")
-    );
 }
 
 #[derive(Debug, Deserialize)]
