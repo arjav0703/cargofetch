@@ -1,4 +1,5 @@
 use crate::Package;
+use owo_colors::OwoColorize;
 
 pub fn output(package: &Package) {
     println!(
@@ -34,5 +35,5 @@ RRR RR   RRRRRRRRRRRRRRRRRRRRRRR  RRRRR
         R                       R
          R
     "#;
-    println!("{}", ascii_art);
+    println!("{}", ascii_art.red().bold());
 }
