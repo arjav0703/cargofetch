@@ -18,11 +18,11 @@ pub fn output(package: &Package) {
         .collect::<Vec<_>>()
         .join(", ");
 
-    println!("info: {:?}", info);
-    print_art();
+    println!("info: {:?}", &info);
+    print_art(info);
 }
 
-fn print_art() {
+fn print_art(info: [String; 3]) {
     let ascii_art = r#"
               R RRRRRRRR R          R
  R RR       R RRRRRRRRRRRRR R      RR
@@ -40,5 +40,16 @@ RRR RR   RRRRRRRRRRRRRRRRRRRRRRR  RRRRR
         R                       R
          R
     "#;
-    println!("{}", ascii_art.red().bold());
+
+    let ascii_lines: Vec<&str> = ascii_art.trim_matches('\n').lines().collect();
+    let err = String::from("");
+
+    // Print each line, aligning ASCII with side text
+    for i in 0..ascii_lines.len().max(info.len()) {
+        let art_line = ascii_lines.get(i).unwrap_or(&"");
+        let side_text = info.get(i).unwrap_or(&err);
+        println!("{:<40}  {}", art_line.red().bold(), side_text);
+    }
+
+    //println!("{}", ascii_art.red().bold());
 }
