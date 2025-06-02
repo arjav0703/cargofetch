@@ -2,23 +2,28 @@ use crate::Package;
 use owo_colors::OwoColorize;
 
 pub fn output(package: &Package) {
-    println!(
-        "Package: {} v{}, {} dependencies: {}",
-        package.name,
-        package.version,
-        package.repository.as_deref().unwrap_or(""),
-        package
-            .dependencies
-            .iter()
-            .map(|d| d.name.clone())
-            .collect::<Vec<_>>()
-            .join(", ")
-    );
+    let info = [
+        format!("Package Name:{}", package.name),
+        format!("Version: {}", package.version),
+        format!(
+            "Reposiory: {}",
+            package.repository.as_deref().unwrap_or("null")
+        ),
+    ];
+
+    let _dependencies = package
+        .dependencies
+        .iter()
+        .map(|d| d.name.clone())
+        .collect::<Vec<_>>()
+        .join(", ");
+
+    println!("info: {:?}", info);
     print_art();
 }
 
 fn print_art() {
-    let ascii_art = r#"                 
+    let ascii_art = r#"
               R RRRRRRRR R          R
  R RR       R RRRRRRRRRRRRR R      RR
 rR RRR    R RRRRRRRRRRRRRRRRR R   RRR R
