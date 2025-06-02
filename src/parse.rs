@@ -2,13 +2,13 @@ use rust_fetch::art;
 use rust_fetch::CargoMetadata;
 use std::process::Command;
 
-pub fn get_meta() {
+pub fn init() {
     let output = Command::new("cargo")
         .args(["metadata", "--format-version", "1", "--no-deps"])
         .output()
         .expect("Failed to execute command");
 
-    jsonparser(output_to_string(output));
+    send_to_art(output_to_string(output));
 }
 
 fn get_cargo_version() -> String {
@@ -36,7 +36,7 @@ fn output_to_string(output: std::process::Output) -> String {
     }
 }
 
-fn jsonparser(json_data: String) {
+fn send_to_art(json_data: String) {
     let cargo_version = get_cargo_version();
 
     let metadata: CargoMetadata = serde_json::from_str(&json_data).expect("Failed to parse JSON");

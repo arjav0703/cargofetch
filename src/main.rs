@@ -6,5 +6,5 @@ fn main() {
         panic!("Application error: Cargo not found. Please install cargo and make sure it is in your PATH.");
     }
 
-    parse::get_meta();
+    parse::init();
 }
