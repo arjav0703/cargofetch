@@ -1,7 +1,7 @@
-use rust_fetch::{self, get_cargo_version, get_meta};
+pub mod parse;
 
 fn main() {
-    get_meta();
-    let cargo_version = get_cargo_version();
+    parse::get_meta();
+    let cargo_version = parse::get_cargo_version();
     println!("You are using Cargo version: {}", cargo_version.trim());
 }
