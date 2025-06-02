@@ -1,12 +1,14 @@
 use serde::Deserialize;
 
+pub mod art;
+
 #[derive(Debug, Deserialize)]
-struct CargoMetadata {
-    packages: Vec<Package>,
+pub struct CargoMetadata {
+    pub packages: Vec<Package>,
 }
 
 #[derive(Debug, Deserialize)]
-struct Package {
+pub struct Package {
     name: String,
     version: String,
     id: String,
@@ -34,7 +36,7 @@ struct Package {
 }
 
 #[derive(Debug, Deserialize)]
-struct Dependency {
+pub struct Dependency {
     name: String,
     source: Option<String>,
     req: String,
@@ -50,23 +52,23 @@ struct Dependency {
 }
 
 #[derive(Debug, Deserialize)]
-struct PackageMetadata {
+pub struct PackageMetadata {
     docs: Option<DocsRsMetadata>,
 }
 
 #[derive(Debug, Deserialize)]
-struct DocsRsMetadata {
+pub struct DocsRsMetadata {
     rs: Option<DocsRsAllFeatures>,
 }
 
 #[derive(Debug, Deserialize)]
-struct DocsRsAllFeatures {
+pub struct DocsRsAllFeatures {
     #[serde(rename = "all-features")]
     all_features: Option<bool>,
 }
 
 #[derive(Debug, Deserialize)]
-struct Target {
+pub struct Target {
     // Add fields as needed if using `targets`
 }
 //fn metad() {

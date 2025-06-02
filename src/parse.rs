@@ -1,6 +1,6 @@
+use rust_fetch::art;
+use rust_fetch::CargoMetadata;
 use std::process::Command;
-
-pub mod art;
 
 pub fn get_meta() {
     let output = Command::new("cargo")
