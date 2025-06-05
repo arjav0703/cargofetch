@@ -1,6 +1,8 @@
 use crate::Package;
 use owo_colors::OwoColorize;
 
+// TODO: there is a lot of duplication in this file, we can refactor it later.
+
 pub fn handler(package: &Package, cargo_version: &String) {
     let dependencies = package.dependencies.len();
 
