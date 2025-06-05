@@ -45,8 +45,19 @@ RRR RR   RRRRRRRRRRRRRRRRRRRRRRR  RRRRR
     for i in 0..ascii_lines.len().max(info.len()) {
         let art_line = ascii_lines.get(i).unwrap_or(&"");
         let side_text = info.get(i).unwrap_or(&err);
-        println!("{:<40}  {}", art_line.red().bold(), side_text);
+
+        let formatted_side_text = if is_even(i) {
+            side_text.red().to_string()
+        } else {
+            side_text.to_string()
+        };
+
+        println!("{:<40}  {}", art_line.red().bold(), formatted_side_text);
     }
 
     //println!("{}", ascii_art.red().bold());
+}
+
+fn is_even(n: usize) -> bool {
+    n % 2 == 0
 }
