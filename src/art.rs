@@ -5,12 +5,13 @@ pub fn handler(package: &Package, cargo_version: &String) {
     let dependencies = package.dependencies.len();
 
     let info = [
-        format!("Cargo Version: {}", cargo_version),
-        format!("Package Name:{}", package.name),
-        format!("Version: {}", package.version),
-        format!("Dependencies: {} (Cargo)", dependencies),
+        format!("{} {}", "Cargo Version:".red(), cargo_version),
+        format!("{} {}", "Package Name:".red(), package.name),
+        format!("{} {}", "Version:".red(), package.version),
+        format!("{} {}", "Dependencies:".red(), dependencies),
         format!(
-            "Repository: {}",
+            "{} {}",
+            "Repository:".red(),
             package.repository.as_deref().unwrap_or("null")
         ),
     ];
@@ -46,18 +47,8 @@ RRR RR   RRRRRRRRRRRRRRRRRRRRRRR  RRRRR
         let art_line = ascii_lines.get(i).unwrap_or(&"");
         let side_text = info.get(i).unwrap_or(&err);
 
-        let formatted_side_text = if is_even(i) {
-            side_text.red().to_string()
-        } else {
-            side_text.to_string()
-        };
-
-        println!("{:<40}  {}", art_line.red().bold(), formatted_side_text);
+        println!("{:<40}  {}", art_line.red().bold(), side_text);
     }
 
     //println!("{}", ascii_art.red().bold());
-}
-
-fn is_even(n: usize) -> bool {
-    n % 2 == 0
 }
