@@ -1,7 +1,6 @@
 # Cargofetch 🦀
 
-Cargofetch is a lightweight CLI tool written in Rust that fetches metadata about your Rust project. It displays the project's name, version, and repository URL in a visually appealing format, inspired by the look and feel of neofetch.
-Features
+Cargofetch is a lightweight CLI tool written in Rust that fetches metadata about your Rust project.
 
 ## Installation
 
