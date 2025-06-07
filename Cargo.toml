@@ -1,5 +1,5 @@
 [package]
-name = "cargo-fetch"
+name = "cargofetch"
 version = "0.1.0"
 edition = "2024"
 categories = ["command-line-utilities"]

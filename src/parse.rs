@@ -1,5 +1,5 @@
-use cargo_fetch::art;
-use cargo_fetch::CargoMetadata;
+use cargofetch::art;
+use cargofetch::CargoMetadata;
 use std::process::Command;
 
 pub fn init() {
