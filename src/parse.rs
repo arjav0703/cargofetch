@@ -1,5 +1,5 @@
-use rust_fetch::art;
-use rust_fetch::CargoMetadata;
+use cargo_fetch::art;
+use cargo_fetch::CargoMetadata;
 use std::process::Command;
 
 pub fn init() {
