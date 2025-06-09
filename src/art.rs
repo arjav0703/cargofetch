@@ -2,48 +2,47 @@ use crate::cli::art_status;
 use crate::Package;
 use owo_colors::OwoColorize;
 
-// TODO: there is a lot of duplication in this file, we can refactor it later.
-
 pub fn handler(package: &Package, cargo_version: &String) {
-    let dependencies = package.dependencies.len();
+    let info = format_package_info(package, cargo_version);
+    print_art(&info);
+}
 
-    let info = [
-        format!("{} {}", "Cargo Version:".red(), cargo_version),
-        format!("{} {}", "Package Name:".red(), package.name),
-        format!("{} {}", "Version:".red(), package.version),
-        format!("{} {}", "Dependencies:".red(), dependencies),
-        format!(
-            "{} {}",
-            "Repository:".red(),
-            package.repository.as_deref().unwrap_or("null")
+fn format_package_info(package: &Package, cargo_version: &String) -> Vec<String> {
+    let fields = [
+        ("Cargo Version:", cargo_version.as_str()),
+        ("Package Name:", package.name.as_str()),
+        ("Version:", package.version.as_str()),
+        ("Dependencies:", &package.dependencies.len().to_string()),
+        (
+            "Repository:",
+            package.repository.as_deref().unwrap_or("null"),
         ),
     ];
 
-    print_art(info);
+    fields
+        .iter()
+        .map(|(label, value)| format!("{} {}", label.red(), value))
+        .collect()
 }
 
-fn print_art(info: [String; 5]) {
+fn print_art(info: &[String]) {
     let ascii_art = art_gen();
-
     let ascii_lines: Vec<&str> = ascii_art.trim_matches('\n').lines().collect();
-    let err = String::from("");
 
-    for i in 0..ascii_lines.len().max(info.len()) {
-        let art_line = ascii_lines.get(i).unwrap_or(&"");
-        let side_text = info.get(i).unwrap_or(&err);
-
+    for (art_line, side_text) in ascii_lines
+        .iter()
+        .zip(info.iter().chain(std::iter::repeat(&"".to_string())))
+    {
         println!("{:<40}  {}", art_line.red().bold(), side_text);
     }
 }
 
 fn art_gen() -> String {
-    let restrict_art: bool = art_status();
-
-    if restrict_art {
+    if art_status() {
         return String::new();
     }
 
-    let mut ascii_art = r#"
+    r#"
                  R RR RR   
               R RRRRRRRR R          R
  R RR       R RRRRRRRRRRRRR R      RR
@@ -60,7 +59,6 @@ RRR RR   RRRRRRRRRRRRRRRRRRRRRRR  RRRRR
        RR                        R
         R                       R
          R              
-    "#;
-
-    ascii_art.to_string()
+    "#
+    .to_string()
 }
