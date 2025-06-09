@@ -20,7 +20,7 @@ fn format_package_info(package: &Package, cargo_version: &String, lines: usize) 
         ),
         ("Authors:", &package.authors.join(", ")),
         ("Dependencies:", &package.dependencies.len().to_string()),
-        ("Lines:", &lines.to_string()),
+        ("Lines of Code:", &lines.to_string()),
         ("Repo:", package.repository.as_deref().unwrap_or("none")),
         (
             "Documentation:",

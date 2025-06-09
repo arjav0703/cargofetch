@@ -2,6 +2,7 @@ use serde::Deserialize;
 pub mod art;
 mod cli;
 mod size;
+
 #[derive(Debug, Deserialize)]
 pub struct CargoMetadata {
     pub packages: Vec<Package>,
@@ -36,7 +37,7 @@ pub struct Package {
 }
 
 #[derive(Debug, Deserialize)]
-pub struct Dependency {
+struct Dependency {
     name: String,
     source: Option<String>,
     req: String,
