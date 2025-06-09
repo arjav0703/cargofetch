@@ -12,11 +12,19 @@ fn format_package_info(package: &Package, cargo_version: &String) -> Vec<String>
         ("Cargo Version:", cargo_version.as_str()),
         ("Package Name:", package.name.as_str()),
         ("Version:", package.version.as_str()),
-        ("Dependencies:", &package.dependencies.len().to_string()),
         (
-            "Repository:",
-            package.repository.as_deref().unwrap_or("null"),
+            "Description:",
+            package.description.as_deref().unwrap_or("null"),
         ),
+        ("Dependencies:", &package.dependencies.len().to_string()),
+        ("Repository:", package.repository.as_deref().unwrap_or("")),
+        ("Homepage:", package.homepage.as_deref().unwrap_or("")),
+        (
+            "Documentation:",
+            package.documentation.as_deref().unwrap_or(""),
+        ),
+        ("License:", package.license.as_deref().unwrap_or("")),
+        ("Edition:", package.edition.as_str()),
     ];
 
     fields
