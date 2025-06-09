@@ -1,4 +1,3 @@
-mod cli;
 pub mod parse;
 use which::which;
 
