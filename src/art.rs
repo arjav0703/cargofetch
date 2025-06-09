@@ -10,15 +10,14 @@ pub fn handler(package: &Package, cargo_version: &String) {
 fn format_package_info(package: &Package, cargo_version: &String) -> Vec<String> {
     let fields = [
         ("Cargo Version:", cargo_version.as_str()),
-        ("Package Name:", package.name.as_str()),
+        ("Package:", package.name.as_str()),
         ("Version:", package.version.as_str()),
         (
             "Description:",
             package.description.as_deref().unwrap_or("null"),
         ),
         ("Dependencies:", &package.dependencies.len().to_string()),
-        ("Repository:", package.repository.as_deref().unwrap_or("")),
-        ("Homepage:", package.homepage.as_deref().unwrap_or("")),
+        ("Repo:", package.repository.as_deref().unwrap_or("")),
         (
             "Documentation:",
             package.documentation.as_deref().unwrap_or(""),
@@ -29,7 +28,7 @@ fn format_package_info(package: &Package, cargo_version: &String) -> Vec<String>
 
     fields
         .iter()
-        .map(|(label, value)| format!("{} {}", label.red(), value))
+        .map(|(label, value)| format!("{} {:>1}", label.red(), value))
         .collect()
 }
 
