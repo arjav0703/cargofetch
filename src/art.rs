@@ -14,15 +14,16 @@ fn format_package_info(package: &Package, cargo_version: &String) -> Vec<String>
         ("Version:", package.version.as_str()),
         (
             "Description:",
-            package.description.as_deref().unwrap_or("null"),
+            package.description.as_deref().unwrap_or("none"),
         ),
+        ("Authors:", &package.authors.join(", ")),
         ("Dependencies:", &package.dependencies.len().to_string()),
-        ("Repo:", package.repository.as_deref().unwrap_or("")),
+        ("Repo:", package.repository.as_deref().unwrap_or("none")),
         (
             "Documentation:",
-            package.documentation.as_deref().unwrap_or(""),
+            package.documentation.as_deref().unwrap_or("none"),
         ),
-        ("License:", package.license.as_deref().unwrap_or("")),
+        ("License:", package.license.as_deref().unwrap_or("none")),
         ("Edition:", package.edition.as_str()),
     ];
 
@@ -45,7 +46,7 @@ fn print_art(info: &[String]) {
             .iter()
             .zip(info.iter().chain(std::iter::repeat(&"".to_string())))
         {
-            println!("{:<40}  {}", art_line.red().bold(), side_text);
+            println!("{:<40}  {}", art_line.red(), side_text);
         }
     }
 }
