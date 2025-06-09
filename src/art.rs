@@ -26,14 +26,20 @@ fn format_package_info(package: &Package, cargo_version: &String) -> Vec<String>
 }
 
 fn print_art(info: &[String]) {
-    let ascii_art = art_gen();
-    let ascii_lines: Vec<&str> = ascii_art.trim_matches('\n').lines().collect();
+    if art_status() {
+        for line in info {
+            println!("{}", line);
+        }
+    } else {
+        let ascii_art = art_gen();
+        let ascii_lines: Vec<&str> = ascii_art.trim_matches('\n').lines().collect();
 
-    for (art_line, side_text) in ascii_lines
-        .iter()
-        .zip(info.iter().chain(std::iter::repeat(&"".to_string())))
-    {
-        println!("{:<40}  {}", art_line.red().bold(), side_text);
+        for (art_line, side_text) in ascii_lines
+            .iter()
+            .zip(info.iter().chain(std::iter::repeat(&"".to_string())))
+        {
+            println!("{:<40}  {}", art_line.red().bold(), side_text);
+        }
     }
 }
 
