@@ -1,13 +1,15 @@
 use crate::cli::art_status;
-use crate::Package;
+use crate::{size, Package};
 use owo_colors::OwoColorize;
 
 pub fn handler(package: &Package, cargo_version: &String) {
-    let info = format_package_info(package, cargo_version);
+    let lines = size::get_lines();
+
+    let info = format_package_info(package, cargo_version, lines);
     print_art(&info);
 }
 
-fn format_package_info(package: &Package, cargo_version: &String) -> Vec<String> {
+fn format_package_info(package: &Package, cargo_version: &String, lines: usize) -> Vec<String> {
     let fields = [
         ("Cargo Version:", cargo_version.as_str()),
         ("Package:", package.name.as_str()),
@@ -18,6 +20,7 @@ fn format_package_info(package: &Package, cargo_version: &String) -> Vec<String>
         ),
         ("Authors:", &package.authors.join(", ")),
         ("Dependencies:", &package.dependencies.len().to_string()),
+        ("Lines:", &lines.to_string()),
         ("Repo:", package.repository.as_deref().unwrap_or("none")),
         (
             "Documentation:",

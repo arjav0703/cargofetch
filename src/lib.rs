@@ -1,7 +1,7 @@
 use serde::Deserialize;
 pub mod art;
 mod cli;
-
+mod size;
 #[derive(Debug, Deserialize)]
 pub struct CargoMetadata {
     pub packages: Vec<Package>,
