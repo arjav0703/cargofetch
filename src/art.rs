@@ -1,3 +1,4 @@
+use crate::cli::art_status;
 use crate::Package;
 use owo_colors::OwoColorize;
 
@@ -22,7 +23,27 @@ pub fn handler(package: &Package, cargo_version: &String) {
 }
 
 fn print_art(info: [String; 5]) {
-    let ascii_art = r#"
+    let ascii_art = art_gen();
+
+    let ascii_lines: Vec<&str> = ascii_art.trim_matches('\n').lines().collect();
+    let err = String::from("");
+
+    for i in 0..ascii_lines.len().max(info.len()) {
+        let art_line = ascii_lines.get(i).unwrap_or(&"");
+        let side_text = info.get(i).unwrap_or(&err);
+
+        println!("{:<40}  {}", art_line.red().bold(), side_text);
+    }
+}
+
+fn art_gen() -> String {
+    let restrict_art: bool = art_status();
+
+    if restrict_art {
+        return String::new();
+    }
+
+    let mut ascii_art = r#"
                  R RR RR   
               R RRRRRRRR R          R
  R RR       R RRRRRRRRRRRRR R      RR
@@ -41,16 +62,5 @@ RRR RR   RRRRRRRRRRRRRRRRRRRRRRR  RRRRR
          R              
     "#;
 
-    let ascii_lines: Vec<&str> = ascii_art.trim_matches('\n').lines().collect();
-    let err = String::from("");
-
-    // Print each line, aligning ASCII with side text
-    for i in 0..ascii_lines.len().max(info.len()) {
-        let art_line = ascii_lines.get(i).unwrap_or(&"");
-        let side_text = info.get(i).unwrap_or(&err);
-
-        println!("{:<40}  {}", art_line.red().bold(), side_text);
-    }
-
-    //println!("{}", ascii_art.red().bold());
+    ascii_art.to_string()
 }

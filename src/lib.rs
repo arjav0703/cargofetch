@@ -1,6 +1,6 @@
 use serde::Deserialize;
-
 pub mod art;
+mod cli;
 
 #[derive(Debug, Deserialize)]
 pub struct CargoMetadata {
