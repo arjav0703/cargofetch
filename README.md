@@ -6,18 +6,24 @@ Cargofetch is a lightweight CLI tool written in Rust that fetches metadata about
 
 ## Installation
 
-You can install cargofetch by downloading the pre-built binary or compiling from source.
-#### Option 1: Install via Cargo (Rust's package manager)
+#### Install via Cargo (Rust's package manager)
 
 If you have Cargo installed, you can easily install cargofetch by running the following command:
 ```bash
 cargo install cargofetch
 ```
 
-### Option 2: Download Pre-built Binary
+#### AUR
+If you are using an Arch-based Linux distribution, you can install cargofetch from the AUR:
+```bash
+yay -S cargofetch
+```
+
+#### Download Pre-built Binary
 You can download the pre-built binary for your platform from the [releases page](https://github.com/arjav0703/cargofetch/releases).
 
-#### Option 3: Building from Source
+---
+### Building from Source
 
 To build cargofetch from source, clone the repository and use Cargo to build it:
 ```bash
@@ -27,7 +33,7 @@ cargo build --release
 ```
 The binary will be located in the target/release/ directory.
 
----
+
 ## Acknowledgements
 This projcet was inspired by [neofetch](https://en.wikipedia.org/wiki/Neofetch) and [onefetch](https://onefetch.dev). Also, the ASCII art logo was also taken from onefetch.
 
