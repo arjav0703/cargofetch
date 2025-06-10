@@ -1,31 +1,43 @@
 use crate::cli::art_status;
-use crate::Package;
+use crate::{size, Package};
+use owo_colors::colors::CustomColor;
 use owo_colors::OwoColorize;
-
 pub fn handler(package: &Package, cargo_version: &String) {
-    let info = format_package_info(package, cargo_version);
+    let lines = size::get_lines();
+
+    let info = format_package_info(package, cargo_version, lines);
     print_art(&info);
 }
 
-fn format_package_info(package: &Package, cargo_version: &String) -> Vec<String> {
+fn format_package_info(package: &Package, cargo_version: &String, lines: usize) -> Vec<String> {
     let fields = [
         ("Cargo Version:", cargo_version.as_str()),
-        ("Package Name:", package.name.as_str()),
+        ("Package:", package.name.as_str()),
         ("Version:", package.version.as_str()),
-        ("Dependencies:", &package.dependencies.len().to_string()),
         (
-            "Repository:",
-            package.repository.as_deref().unwrap_or("null"),
+            "Description:",
+            package.description.as_deref().unwrap_or("none"),
         ),
+        ("Authors:", &package.authors.join(", ")),
+        ("Dependencies:", &package.dependencies.len().to_string()),
+        ("Lines of Code:", &lines.to_string()),
+        ("Repo:", package.repository.as_deref().unwrap_or("none")),
+        (
+            "Documentation:",
+            package.documentation.as_deref().unwrap_or("none"),
+        ),
+        ("License:", package.license.as_deref().unwrap_or("none")),
+        ("Edition:", package.edition.as_str()),
     ];
 
     fields
         .iter()
-        .map(|(label, value)| format!("{} {}", label.red(), value))
+        .map(|(label, value)| format!("{} {:>1}", label.fg::<CustomColor<247, 76, 0>>(), value))
         .collect()
 }
 
 fn print_art(info: &[String]) {
+    //let color = Color::Rgb(247, 76, 0);
     if art_status() {
         for line in info {
             println!("{}", line);
@@ -38,7 +50,11 @@ fn print_art(info: &[String]) {
             .iter()
             .zip(info.iter().chain(std::iter::repeat(&"".to_string())))
         {
-            println!("{:<40}  {}", art_line.red().bold(), side_text);
+            println!(
+                "{:<40}  {}",
+                art_line.fg::<CustomColor<247, 76, 0>>(),
+                side_text
+            );
         }
     }
 }

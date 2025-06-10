@@ -1,10 +1,7 @@
+mod checks;
 pub mod parse;
-use which::which;
 
 fn main() {
-    if which("cargo").is_err() {
-        panic!("Application error: Cargo not found. Please install cargo and make sure it is in your PATH.");
-    }
-
+    checks::env_check();
     parse::init();
 }
