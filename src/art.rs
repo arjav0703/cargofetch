@@ -1,7 +1,7 @@
 use crate::cli::art_status;
 use crate::{size, Package};
+use owo_colors::colors::CustomColor;
 use owo_colors::OwoColorize;
-
 pub fn handler(package: &Package, cargo_version: &String) {
     let lines = size::get_lines();
 
@@ -32,11 +32,12 @@ fn format_package_info(package: &Package, cargo_version: &String, lines: usize) 
 
     fields
         .iter()
-        .map(|(label, value)| format!("{} {:>1}", label.red(), value))
+        .map(|(label, value)| format!("{} {:>1}", label.fg::<CustomColor<247, 76, 0>>(), value))
         .collect()
 }
 
 fn print_art(info: &[String]) {
+    //let color = Color::Rgb(247, 76, 0);
     if art_status() {
         for line in info {
             println!("{}", line);
@@ -49,7 +50,11 @@ fn print_art(info: &[String]) {
             .iter()
             .zip(info.iter().chain(std::iter::repeat(&"".to_string())))
         {
-            println!("{:<40}  {}", art_line.red(), side_text);
+            println!(
+                "{:<40}  {}",
+                art_line.fg::<CustomColor<247, 76, 0>>(),
+                side_text
+            );
         }
     }
 }

@@ -16,7 +16,6 @@ fn get_cargo_version() -> String {
         .arg("--version")
         .output()
         .expect("Failed to execute command");
-    // this will return a String
 
     output_to_string(output)
         .split_whitespace()
