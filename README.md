@@ -28,26 +28,12 @@ After installing cargofetch, you can run it directly from your project directory
 cargofetch
 ```
 Example output:
-```
-                 R RR RR                  Cargo Version: 1.87.0
-              R RRRRRRRR R          R     Package Name: cargofetch
- R RR       R RRRRRRRRRRRRR R      RR     Version: 0.1.0
-rR RRR    R RRRRRRRRRRRRRRRRR R   RRR R   Dependencies: 4
-RRR RR   RRRRRRRRRRRRRRRRRRRRRRR  RRRRR   Repository: https://github.com/arjav0703/rust-fetch
- RRRRR  RRRRRRRRRRRRRRRRRRRRRRRR  RRRR    
-  RRR RRRRRRRRRRRRRRRRRRRRRRRRRRRR RR     
-    R  RRRRRRRRRR=  RR = RRRRRRRRRRR      
-     RRRRRRRRRRRR=  RR = RRRRRRRRRR       
-      RRRRRRRRRRR   RR   RRRRRRRRRR       
-     RR==RRRRRRRRRRRRRRRRRRRRRR===RR      
-     RR =  ==RRRRRRR  RRRRRR==  = RR      
-      RR =     ===========     = RR       
-       RR                        R        
-        R                       R         
-         R                                
-```
+!(Image)[https://hc-cdn.hel1.your-objectstorage.com/s/v3/08442b9bd462c34a0aa9944b1599ea74080ee375_image.png]
 
+---
+## Acknowledgements
+This projcet was inspired by (neofetch)[https://en.wikipedia.org/wiki/Neofetch] and (onefetch)[https://onefetch.dev/]. Also, the ASCII art logo was also taken from onefetch.
 
-License
+## License
 
 This project is licensed under the MIT License - see the LICENSE.md file for details.
