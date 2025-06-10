@@ -2,6 +2,8 @@
 
 Cargofetch is a lightweight CLI tool written in Rust that fetches metadata about your Rust project.
 
+![Image](https://hc-cdn.hel1.your-objectstorage.com/s/v3/08442b9bd462c34a0aa9944b1599ea74080ee375_image.png)
+
 ## Installation
 
 You can install cargofetch by downloading the pre-built binary or compiling from source.
@@ -24,15 +26,6 @@ cd cargofetch
 cargo build --release
 ```
 The binary will be located in the target/release/ directory.
-
-## Usage
-
-After installing cargofetch, you can run it directly from your project directory (containing Cargo.toml):
-```
-cargofetch
-```
-Example output:
-![Image](https://hc-cdn.hel1.your-objectstorage.com/s/v3/08442b9bd462c34a0aa9944b1599ea74080ee375_image.png)
 
 ---
 ## Acknowledgements
