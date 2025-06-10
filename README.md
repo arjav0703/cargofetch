@@ -11,7 +11,11 @@ If you have Cargo installed, you can easily install cargofetch by running the fo
 ```bash
 cargo install cargofetch
 ```
-#### Option 2: Building from Source
+
+### Option 2: Download Pre-built Binary
+You can download the pre-built binary for your platform from the [releases page](https://github.com/arjav0703/cargofetch/releases).
+
+#### Option 3: Building from Source
 
 To build cargofetch from source, clone the repository and use Cargo to build it:
 ```bash
