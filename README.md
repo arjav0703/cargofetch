@@ -28,11 +28,11 @@ After installing cargofetch, you can run it directly from your project directory
 cargofetch
 ```
 Example output:
-!(Image)[https://hc-cdn.hel1.your-objectstorage.com/s/v3/08442b9bd462c34a0aa9944b1599ea74080ee375_image.png]
+![Image](https://hc-cdn.hel1.your-objectstorage.com/s/v3/08442b9bd462c34a0aa9944b1599ea74080ee375_image.png)
 
 ---
 ## Acknowledgements
-This projcet was inspired by (neofetch)[https://en.wikipedia.org/wiki/Neofetch] and (onefetch)[https://onefetch.dev/]. Also, the ASCII art logo was also taken from onefetch.
+This projcet was inspired by [neofetch](https://en.wikipedia.org/wiki/Neofetch) and [onefetch](https://onefetch.dev). Also, the ASCII art logo was also taken from onefetch.
 
 ## License
 
