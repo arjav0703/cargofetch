@@ -12,6 +12,12 @@ If you have Cargo installed, you can easily install cargofetch by running the fo
 ```bash
 cargo install cargofetch
 ```
+#### 🍺 Homebrew (macOS)
+Add homebrew tap and install cargofetch:
+```bash
+brew tap arjav0703/cargofetch https://github.com/arjav0703/cargofetch.git
+brew install arjav0703/cargofetch/Cargofetch
+```
 
 #### AUR
 If you are using an Arch-based Linux distribution, you can install cargofetch from the AUR:
