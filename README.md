@@ -1,4 +1,7 @@
 # Cargofetch 🦀
+![GitHub License](https://img.shields.io/github/license/arjav0703/cargofetch)
+![GitHub last commit](https://img.shields.io/github/last-commit/arjav0703/cargofetch)
+
 
 Cargofetch is a lightweight CLI tool written in Rust that fetches metadata about your Rust project.
 
@@ -24,6 +27,7 @@ brew install arjav0703/cargofetch/Cargofetch
 ```
 
 #### AUR
+![AUR Last Modified](https://img.shields.io/aur/last-modified/cargofetch)
 If you are using an Arch-based Linux distribution, you can install cargofetch from the AUR:
 ```bash
 yay -S cargofetch
