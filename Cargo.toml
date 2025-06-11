@@ -1,6 +1,6 @@
 [package]
 name = "cargofetch"
-version = "0.1.4"
+version = "1.0.0"
 edition = "2024"
 categories = ["command-line-utilities"]
 authors = ["Arjav Jain <arjavjain0703@gmail.com>"]
