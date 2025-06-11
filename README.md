@@ -5,6 +5,10 @@ Cargofetch is a lightweight CLI tool written in Rust that fetches metadata about
 ![Image](https://hc-cdn.hel1.your-objectstorage.com/s/v3/08442b9bd462c34a0aa9944b1599ea74080ee375_image.png)
 
 ## Installation
+[![Crates.io](https://img.shields.io/crates/v/cargofetch.svg)](https://crates.io/crates/cargofetch)
+[![Homebrew Tap](https://img.shields.io/badge/homebrew-cargofetch-blue)](https://github.com/arjav0703/cargofetch)
+[![AUR](https://img.shields.io/aur/version/cargofetch)](https://aur.archlinux.org/packages/cargofetch)
+
 
 #### Install via Cargo (Rust's package manager)
 
@@ -25,11 +29,11 @@ If you are using an Arch-based Linux distribution, you can install cargofetch fr
 yay -S cargofetch
 ```
 
-#### Download Pre-built Binary
+#### 📁 Download Pre-built Binary
 You can download the pre-built binary for your platform from the [releases page](https://github.com/arjav0703/cargofetch/releases).
 
 ---
-### Building from Source
+### 🔧 Building from Source
 
 To build cargofetch from source, clone the repository and use Cargo to build it:
 ```bash
