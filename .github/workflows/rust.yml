@@ -89,7 +89,6 @@ jobs:
         elif [[ ${{ matrix.config.os }} == 'macos-latest' ]]; then
           echo "debugfilename=cargofetch-debug-nightly-macos" >> $GITHUB_OUTPUT
           echo "releasefilename=cargofetch-release-nightly-macos" >> $GITHUB_OUTPUT
-          mv target/debug/cargofetch-universal target/debug/cargofetch-debug-nightly-macos
           mv target/release/cargofetch-universal target/release/cargofetch-release-nightly-macos
         else
           echo "debugfilename=cargofetch-debug-nightly-linux" >> $GITHUB_OUTPUT
