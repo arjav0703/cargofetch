@@ -8,8 +8,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read       # default for checkout, etc.
-  releases: write      # allow create/update GitHub Releases
+  contents: write
 
 jobs:
   build-and-publish:
