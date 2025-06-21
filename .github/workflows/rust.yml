@@ -1,10 +1,10 @@
-name: Build Cargofetch
+name: Build & Publish Cargofetch
 
 on:
   push:
-    branches: [ "**" ]
+    branches: [ "v1" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "v1" ]
   workflow_dispatch:
 
 env:
@@ -12,7 +12,7 @@ env:
   NIGHTLY_BUILD: 1
 
 permissions:
-  contents: write
+  contents: write 
   id-token: write
   pull-requests: read
 
@@ -24,14 +24,12 @@ jobs:
         config:
         - name: Windows
           os: windows-latest
-        
         - name: macOS
           os: macos-latest
-        
         - name: Linux
           os: ubuntu-latest
 
-    name: ${{ matrix.config.name }}
+    name: Build on ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
 
     steps:
@@ -51,90 +49,106 @@ jobs:
       run: cargo clippy --verbose
 
     - name: Add x64 for macOS
-      if: contains(matrix.config.os, 'macos')
+      if: matrix.config.os == 'macos-latest'
       run: rustup target add x86_64-apple-darwin
 
-    - name: Build
+    - name: Build Debug & Release
       run: |
         cargo build --verbose
         cargo build --release --verbose
 
-    - name: Build for Intel Macs
-      if: contains(matrix.config.os, 'macos')
+    - name: Build Intel macOS slices
+      if: matrix.config.os == 'macos-latest'
       run: |
         cargo build --verbose --target x86_64-apple-darwin
         cargo build --release --verbose --target x86_64-apple-darwin
 
-    - name: Combine macOS Builds
-      if: contains(matrix.config.os, 'macos')
+    - name: Combine macOS slices
+      if: matrix.config.os == 'macos-latest'
       run: |
         lipo -create \
-           target/release/cargofetch \
-           target/x86_64-apple-darwin/release/cargofetch \
-           -output target/release/cargofetch-universal
+          target/release/cargofetch \
+          target/x86_64-apple-darwin/release/cargofetch \
+          -output target/release/cargofetch-universal
         lipo -create \
-           target/debug/cargofetch \
-           target/x86_64-apple-darwin/debug/cargofetch \
-           -output target/debug/cargofetch
+          target/debug/cargofetch \
+          target/x86_64-apple-darwin/debug/cargofetch \
+          -output target/debug/cargofetch
 
-    - name: Change File Names
-      shell: bash
+    - name: Rename binaries for upload
       id: rename
+      shell: bash
       run: |
-        if [[ ${{ matrix.config.os }} == 'windows-latest' ]]; then
-          echo "debugfilename=cargofetch-debug-nightly.exe" >> $GITHUB_OUTPUT
-          echo "releasefilename=cargofetch-release-nightly.exe" >> $GITHUB_OUTPUT
-          mv target/debug/cargofetch.exe target/debug/cargofetch-debug-nightly.exe
-          mv target/release/cargofetch.exe target/release/cargofetch-release-nightly.exe
-        elif [[ ${{ matrix.config.os }} == 'macos-latest' ]]; then
-          echo "debugfilename=cargofetch-debug-nightly-macos" >> $GITHUB_OUTPUT
-          echo "releasefilename=cargofetch-release-nightly-macos" >> $GITHUB_OUTPUT
-          mv target/release/cargofetch-universal target/release/cargofetch-release-nightly-macos
-        else
-          echo "debugfilename=cargofetch-debug-nightly-linux" >> $GITHUB_OUTPUT
-          echo "releasefilename=cargofetch-release-nightly-linux" >> $GITHUB_OUTPUT
-          mv target/debug/cargofetch target/debug/cargofetch-debug-nightly-linux
-          mv target/release/cargofetch target/release/cargofetch-release-nightly-linux
-        fi
+        case "${{ matrix.config.os }}" in
+          windows-latest)
+            echo "debugfile=cargofetch-debug-v1.exe" >> $GITHUB_OUTPUT
+            echo "releasefile=cargofetch-release-v1.exe" >> $GITHUB_OUTPUT
+            mv target/debug/cargofetch.exe target/debug/${{ steps.rename.outputs.debugfile }}
+            mv target/release/cargofetch.exe target/release/${{ steps.rename.outputs.releasefile }}
+            ;;
+          macos-latest)
+            echo "debugfile=cargofetch-debug-v1-macos" >> $GITHUB_OUTPUT
+            echo "releasefile=cargofetch-release-v1-macos" >> $GITHUB_OUTPUT
+            mv target/release/cargofetch-universal target/release/${{ steps.rename.outputs.releasefile }}
+            ;;
+          ubuntu-latest)
+            echo "debugfile=cargofetch-debug-v1-linux" >> $GITHUB_OUTPUT
+            echo "releasefile=cargofetch-release-v1-linux" >> $GITHUB_OUTPUT
+            mv target/debug/cargofetch target/debug/${{ steps.rename.outputs.debugfile }}
+            mv target/release/cargofetch target/release/${{ steps.rename.outputs.releasefile }}
+            ;;
+        esac
 
-    - name: Upload nightly debug artifact
+    - name: Upload Debug artifact
       uses: actions/upload-artifact@v4
       with:
-        name: ${{ steps.rename.outputs.debugfilename }}
-        path: target/debug/${{ steps.rename.outputs.debugfilename }}
+        name: ${{ steps.rename.outputs.debugfile }}
+        path: target/debug/${{ steps.rename.outputs.debugfile }}
 
-    - name: Upload nightly release artifact
+    - name: Upload Release artifact
       uses: actions/upload-artifact@v4
       with:
-        name: ${{ steps.rename.outputs.releasefilename }}
-        path: target/release/${{ steps.rename.outputs.releasefilename }}
+        name: ${{ steps.rename.outputs.releasefile }}
+        path: target/release/${{ steps.rename.outputs.releasefile }}
 
-  package:
-    name: Package Builds
+  release:
+    name: Publish GitHub Release
     runs-on: ubuntu-latest
     needs: build
+    if: github.ref == 'refs/heads/v1'   # only when pushing to v1 branch
 
     steps:
-    - uses: actions/download-artifact@v4
+    - name: Download all build artifacts
+      uses: actions/download-artifact@v4
       with:
-        path: "artifacts2"
+        path: artifacts
 
-    - name: move artifacts
-      run: |
-        mkdir artifacts
-        mv artifacts2/*/* artifacts
-
-    - name: Release nightly
-      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-      uses: andelf/nightly-release@main
+    - name: Create or Update Release v1
+      id: create_release
+      uses: actions/create-release@v1
+      with:
+        tag_name: v1
+        release_name: "v1"
+        body: |
+          ## Cargofetch v1
+          This release was autogenerated by GitHub Actions.
+        draft: false
+        prerelease: false
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Upload Release Assets
+      uses: actions/upload-release-asset@v1
       with:
-        tag_name: nightly
-        name: 'Development Release'
-        body: |
-          Generated nightly release for cargofetch.
-          Will be unstable!
-        files: |
-          artifacts/*
-  
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: artifacts/${{ steps.rename.outputs.debugfile }}
+        asset_name: ${{ steps.rename.outputs.debugfile }}
+        asset_content_type: application/octet-stream
+
+    - name: Upload Release Assets (release)
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: artifacts/${{ steps.rename.outputs.releasefile }}
+        asset_name: ${{ steps.rename.outputs.releasefile }}
+        asset_content_type: application/octet-stream
