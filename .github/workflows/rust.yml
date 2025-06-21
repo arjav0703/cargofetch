@@ -39,7 +39,7 @@ jobs:
         id: gh_release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.ref_name }}
+          tag_name: "vtest"
           name: Release ${{ github.ref_name }}
           body: |
             Automated release for tag `${{ github.ref_name }}`
@@ -51,7 +51,7 @@ jobs:
         with:
           tag_name: "vtest"
           asset_path: target/release/cargofetch
-          asset_name: my-binary-${{ runner.os }}
+          asset_name: cargofetch-${{ runner.os }}
           asset_content_type: application/octet-stream
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
