@@ -40,23 +40,22 @@ nix profile install github:arjav0703/cargofetch
 ```
 
 #### 📁 Download Binary
-Run
+Automatic:
 ```bash
 curl -fsSL https://raw.githubusercontent.com/arjav0703/cargofetch/refs/heads/v1/install-bin.sh | bash
 ```
 
-OR
-
+Manual:
 You can download the pre-built binary for your platform from the [releases page](https://github.com/arjav0703/cargofetch/releases).
 
 ---
 ### 🔧 Building from Source
-
+Automatic:
 ```bash
 curl -fsSL https://raw.githubusercontent.com/arjav0703/cargofetch/refs/heads/v1/install-source.sh | bash
 ```
 
-To build cargofetch from source, clone the repository and use Cargo to build it:
+Manual:
 ```bash
 git clone https://github.com/arjav0703/cargofetch.git
 cd cargofetch
