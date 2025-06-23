@@ -1,4 +1,6 @@
 use crate::cli::art_status;
+use crate::cli::art_type;
+use crate::cli::ArtType;
 use crate::size;
 use crate::structure::Package;
 use owo_colors::colors::CustomColor;
@@ -13,9 +15,9 @@ pub fn handler(package: &Package, cargo_version: &String) {
 }
 
 /// Formats the package information into a vector of strings for display.
-fn format_package_info(package: &Package, cargo_version: &String, lines: usize) -> Vec<String> {
+fn format_package_info(package: &Package, cargo_version: &str, lines: usize) -> Vec<String> {
     let fields = [
-        ("Cargo Version:", cargo_version.as_str()),
+        ("Cargo Version:", cargo_version),
         ("Package:", package.name.as_str()),
         ("Version:", package.version.as_str()),
         (
@@ -70,6 +72,13 @@ fn art_gen() -> String {
         return String::new();
     }
 
+    match art_type() {
+        ArtType::Crab => crab_art(),
+        ArtType::Rust => rust_art(),
+    }
+}
+
+fn crab_art() -> String {
     r#"
                  R RR RR   
               R RRRRRRRR R          R
@@ -87,6 +96,13 @@ RRR RR   RRRRRRRRRRRRRRRRRRRRRRR  RRRRR
        RR                        R
         R                       R
          R              
+    "#
+    .to_string()
+}
+
+fn rust_art() -> String {
+    r#"
+    Support comming soon
     "#
     .to_string()
 }

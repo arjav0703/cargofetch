@@ -34,19 +34,19 @@ pub struct Package {
 }
 
 #[derive(Debug, Deserialize)]
-struct Dependency {
-    name: String,
-    source: Option<String>,
-    req: String,
-    kind: Option<String>,
-    rename: Option<String>,
-    optional: bool,
-    uses_default_features: bool,
-    features: Vec<String>,
-    target: Option<String>,
-    path: Option<String>,
-    registry: Option<String>,
-    public: Option<bool>,
+pub struct Dependency {
+    pub name: String,
+    pub source: Option<String>,
+    pub req: String,
+    pub kind: Option<String>,
+    pub rename: Option<String>,
+    pub optional: bool,
+    pub uses_default_features: bool,
+    pub features: Vec<String>,
+    pub target: Option<String>,
+    pub path: Option<String>,
+    pub registry: Option<String>,
+    pub public: Option<bool>,
 }
 
 #[derive(Debug, Deserialize)]

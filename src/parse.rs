@@ -1,5 +1,5 @@
 use crate::art;
-use cargofetch::CargoMetadata;
+use crate::structure::CargoMetadata;
 use std::process::Command;
 
 /// Initializes the Cargo metadata parsing and sends the data to the art handler.
