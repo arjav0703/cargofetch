@@ -33,6 +33,12 @@ If you are using an Arch-based Linux distribution, you can install cargofetch fr
 yay -S cargofetch
 ```
 
+#### NIX flakes
+If you are using Nix, you can install cargofetch using flakes:
+```bash
+nix profile install github:arjav0703/cargofetch
+```
+
 #### 📁 Download Pre-built Binary
 You can download the pre-built binary for your platform from the [releases page](https://github.com/arjav0703/cargofetch/releases).
 
