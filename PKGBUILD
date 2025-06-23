@@ -1,6 +1,6 @@
 # Maintainer: Arjav Jain <arjavjain0703@gmail.com>
 pkgname=cargofetch
-pkgver=1.0.0
+pkgver=1.1.0
 pkgrel=1
 pkgdesc="Cargofetch is a lightweight CLI tool written in Rust that fetches metadata about your Rust project."
 arch=('x86_64')
