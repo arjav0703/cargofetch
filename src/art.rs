@@ -102,7 +102,27 @@ RRR RR   RRRRRRRRRRRRRRRRRRRRRRR  RRRRR
 
 fn rust_art() -> String {
     r#"
-    Support comming soon
+    
+             `  :y.`yy`.y:  `
+         -``MNsNMMNNNNMMNsNM``-
+      ` -MMNMMMMNNm``NNNMMMMNMM- `
+     `NNNMMMdo:` `+md/  `:odMMMNNN`
+   -ssNMMNo.                .oNMMNss-
+   `mMMMMNmmmmmmmmmmmmmmmdy+` `sMMMm`
+ `mMMMMMMMMMMMMMMMMMMMMMMMMMN/  hMMMMm`
+ -oMN-:Ny:mMMMMMm    oNMMMMMm  oN::MMo-
+.yMMMhhh+ dMMMMMd:::::+mMMMMN/ odyhMMMy.
+-sNMMy    dMMMMMMMMMMMMMMMMs`    `yMMNs-
+-sNMMy    dMMMMMNyyyydMMMMMMy   .odMMNs-
+.yMMMm   dMMMMMh     +MMMMMM+   sMMMMMy.
+ -oMMMMMMMMMMMMMMMMM+  mMMMMMMMMMMMMMo-
+ `mMMMMMMMMMMMMMMMMM+  :NMMMMMMMMMMMMm`
+   `mMMMm                `-:o+:/mMMMm`
+   -ssNMMMyomo            smohMMMNss-
+     `NNNMs+mN/-`      `-/Nd/yMNNN`
+      ` -MMNMMMMMNmmmmNMMMMMNMM- `
+         -``MNsNMMNMMNMMNsNM``-
+               `  :y.`yy`.y:  `
     "#
     .to_string()
 }
