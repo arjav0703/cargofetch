@@ -1,4 +1,4 @@
-use cargofetch::art;
+use crate::art;
 use cargofetch::CargoMetadata;
 use std::process::Command;
 

@@ -1,5 +1,6 @@
 use crate::cli::art_status;
-use crate::{size, Package};
+use crate::size;
+use crate::structure::Package;
 use owo_colors::colors::CustomColor;
 use owo_colors::OwoColorize;
 pub fn handler(package: &Package, cargo_version: &String) {
