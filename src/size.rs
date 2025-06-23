@@ -3,6 +3,7 @@ use std::io::{self, BufRead};
 use std::path::Path;
 use walkdir::WalkDir;
 
+/// Counts the number of lines in a file.
 fn count_lines_in_file(file_path: &Path) -> io::Result<usize> {
     let file = File::open(file_path)?;
     let reader = io::BufReader::new(file);

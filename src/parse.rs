@@ -2,6 +2,7 @@ use crate::art;
 use cargofetch::CargoMetadata;
 use std::process::Command;
 
+/// Initializes the Cargo metadata parsing and sends the data to the art handler.
 pub fn init() {
     let output = Command::new("cargo")
         .args(["metadata", "--format-version", "1", "--no-deps"])
@@ -11,6 +12,7 @@ pub fn init() {
     send_to_art(output_to_string(output));
 }
 
+/// Retrieves the Cargo version from the command line.
 fn get_cargo_version() -> String {
     let output = Command::new("cargo")
         .arg("--version")
@@ -24,6 +26,7 @@ fn get_cargo_version() -> String {
         .to_string()
 }
 
+/// Converts the output of a command to a String, handling both stdout and stderr.
 fn output_to_string(output: std::process::Output) -> String {
     if output.status.success() {
         String::from_utf8_lossy(&output.stdout).to_string()
@@ -35,6 +38,7 @@ fn output_to_string(output: std::process::Output) -> String {
     }
 }
 
+/// Parses the JSON data and sends it to the art handler.
 fn send_to_art(json_data: String) {
     let cargo_version = get_cargo_version();
 

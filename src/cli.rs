@@ -7,6 +7,7 @@ struct Cli {
     no_ascii_art: bool,
 }
 
+/// Returns false if art is allowed (default_value = false)
 pub fn art_status() -> bool {
     let args = Cli::parse();
 

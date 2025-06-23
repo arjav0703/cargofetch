@@ -3,6 +3,8 @@ use crate::size;
 use crate::structure::Package;
 use owo_colors::colors::CustomColor;
 use owo_colors::OwoColorize;
+
+/// Handler for displaying package information in ASCII art format.
 pub fn handler(package: &Package, cargo_version: &String) {
     let lines = size::get_lines();
 
@@ -10,6 +12,7 @@ pub fn handler(package: &Package, cargo_version: &String) {
     print_art(&info);
 }
 
+/// Formats the package information into a vector of strings for display.
 fn format_package_info(package: &Package, cargo_version: &String, lines: usize) -> Vec<String> {
     let fields = [
         ("Cargo Version:", cargo_version.as_str()),
@@ -37,6 +40,7 @@ fn format_package_info(package: &Package, cargo_version: &String, lines: usize) 
         .collect()
 }
 
+// Prints the ASCII art and package information side by side.
 fn print_art(info: &[String]) {
     //let color = Color::Rgb(247, 76, 0);
     if art_status() {
@@ -60,6 +64,7 @@ fn print_art(info: &[String]) {
     }
 }
 
+/// Returns the ascii_art as a string.
 fn art_gen() -> String {
     if art_status() {
         return String::new();
