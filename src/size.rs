@@ -11,6 +11,7 @@ fn count_lines_in_file(file_path: &Path) -> io::Result<usize> {
     Ok(line_count)
 }
 
+/// Returns the number of lines in the project (located at ./src)
 pub fn get_lines() -> usize {
     let folder_path = "./src";
     let mut total_lines = 0;

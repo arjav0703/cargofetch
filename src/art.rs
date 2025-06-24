@@ -71,7 +71,7 @@ fn print_art(info: &[String], enable_art: bool, art_type: String) {
     }
 }
 
-/// Returns the ascii_art as a string.
+/// Returns the ascii_art as a string based on the art_type provided.
 fn art_gen(art_type: &str) -> String {
     if art_status() {
         return String::new();

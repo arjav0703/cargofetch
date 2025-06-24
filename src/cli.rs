@@ -22,6 +22,7 @@ pub fn art_status() -> bool {
     args.disable_art
 }
 
+/// Returns the type of art to be displayed ('crab' or 'rust')
 pub fn art_type() -> String {
     let args = Cli::parse();
 

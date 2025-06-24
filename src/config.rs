@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Config {
     #[serde(default)]
-    pub ascii_art: bool,
+    pub enable_art: bool,
     #[serde(default)]
     pub art_type: String,
 }
@@ -12,7 +12,7 @@ pub struct Config {
 impl Default for Config {
     fn default() -> Self {
         Config {
-            ascii_art: art_status(),
+            enable_art: art_status(),
             art_type: art_type(),
         }
     }
