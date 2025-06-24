@@ -10,6 +10,7 @@ repository = "https://github.com/arjav0703/rust-fetch"
 
 [dependencies]
 clap = { version = "4.5.38", features = ["derive"] }
+directories = "6.0.0"
 owo-colors = "4.2.1"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1.0.140"
