@@ -1,17 +1,21 @@
 use crate::cli::art_status;
-use crate::cli::art_type;
 use crate::cli::ArtType;
+use crate::config::load_config;
 use crate::size;
 use crate::structure::Package;
 use owo_colors::colors::CustomColor;
 use owo_colors::OwoColorize;
 
 /// Handler for displaying package information in ASCII art format.
-pub fn handler(package: &Package, cargo_version: &String) {
+pub fn handler(package: &Package, cargo_version: &str) {
     let lines = size::get_lines();
 
+    let config = load_config().expect("Internal Error: Failed to load config");
+    let enable_art = config.ascii_art;
+    let art_type = config.art_type;
+
     let info = format_package_info(package, cargo_version, lines);
-    print_art(&info);
+    print_art(&info, enable_art, art_type);
 }
 
 /// Formats the package information into a vector of strings for display.
@@ -43,38 +47,43 @@ fn format_package_info(package: &Package, cargo_version: &str, lines: usize) -> 
 }
 
 // Prints the ASCII art and package information side by side.
-fn print_art(info: &[String]) {
+fn print_art(info: &[String], enable_art: bool, art_type: String) {
     //let color = Color::Rgb(247, 76, 0);
-    if art_status() {
+    if !enable_art {
         for line in info {
             println!("{}", line);
         }
-    } else {
-        let ascii_art = art_gen();
-        let ascii_lines: Vec<&str> = ascii_art.trim_matches('\n').lines().collect();
+        return;
+    }
 
-        for (art_line, side_text) in ascii_lines
-            .iter()
-            .zip(info.iter().chain(std::iter::repeat(&"".to_string())))
-        {
-            println!(
-                "{:<40}  {}",
-                art_line.fg::<CustomColor<247, 76, 0>>(),
-                side_text
-            );
-        }
+    let ascii_art = art_gen(&art_type);
+    let ascii_lines: Vec<&str> = ascii_art.trim_matches('\n').lines().collect();
+
+    for (art_line, side_text) in ascii_lines
+        .iter()
+        .zip(info.iter().chain(std::iter::repeat(&"".to_string())))
+    {
+        println!(
+            "{:<40}  {}",
+            art_line.fg::<CustomColor<247, 76, 0>>(),
+            side_text
+        );
     }
 }
 
 /// Returns the ascii_art as a string.
-fn art_gen() -> String {
+fn art_gen(art_type: &str) -> String {
     if art_status() {
         return String::new();
     }
 
-    match art_type() {
-        ArtType::Crab => crab_art(),
-        ArtType::Rust => rust_art(),
+    match art_type {
+        "crab" => crab_art(),
+        "rust" => rust_art(),
+        _ => {
+            eprintln!("Unknown art type: {}. Defaulting to crab art.", art_type);
+            crab_art()
+        }
     }
 }
 
@@ -117,12 +126,12 @@ fn rust_art() -> String {
 .yMMMm   dMMMMMh     +MMMMMM+   sMMMMMy.
  -oMMMMMMMMMMMMMMMMM+  mMMMMMMMMMMMMMo-
  `mMMMMMMMMMMMMMMMMM+  :NMMMMMMMMMMMMm`
-   `mMMMm                `-:o+:/mMMMm`
+  `mMMMm                 `-:o+:/mMMMm`
    -ssNMMMyomo            smohMMMNss-
      `NNNMs+mN/-`      `-/Nd/yMNNN`
       ` -MMNMMMMMNmmmmNMMMMMNMM- `
          -``MNsNMMNMMNMMNsNM``-
-               `  :y.`yy`.y:  `
+            `  :y.`yy`.y:  `
     "#
     .to_string()
 }

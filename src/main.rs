@@ -1,6 +1,7 @@
 pub mod art;
 mod checks;
 pub mod cli;
+pub mod config;
 pub mod parse;
 pub mod size;
 pub mod structure;

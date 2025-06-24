@@ -10,7 +10,7 @@ pub enum ArtType {
 #[command(version, about, long_about = None)]
 struct Cli {
     #[arg(long)]
-    no_ascii_art: bool,
+    disable_art: bool,
 
     #[arg(long, value_enum, default_value_t = ArtType::Crab)]
     art_type: ArtType,
@@ -19,11 +19,14 @@ struct Cli {
 pub fn art_status() -> bool {
     let args = Cli::parse();
 
-    args.no_ascii_art
+    args.disable_art
 }
 
-pub fn art_type() -> ArtType {
+pub fn art_type() -> String {
     let args = Cli::parse();
 
-    args.art_type
+    match args.art_type {
+        ArtType::Crab => "crab".to_string(),
+        ArtType::Rust => "rust".to_string(),
+    }
 }
