@@ -31,3 +31,7 @@ pub fn art_type() -> String {
         ArtType::Rust => "rust".to_string(),
     }
 }
+
+pub fn init() {
+    let _ = Cli::parse();
+}

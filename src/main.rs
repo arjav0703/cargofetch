@@ -7,6 +7,7 @@ pub mod size;
 pub mod structure;
 
 fn main() {
+    cli::init();
     checks::env_check();
     parse::init();
 }

@@ -1,5 +1,5 @@
 use crate::cli::art_status;
-use crate::cli::ArtType;
+//use crate::cli::ArtType;
 use crate::config::load_config;
 use crate::size;
 use crate::structure::Package;
@@ -11,7 +11,7 @@ pub fn handler(package: &Package, cargo_version: &str) {
     let lines = size::get_lines();
 
     let config = load_config().expect("Internal Error: Failed to load config");
-    let enable_art = config.ascii_art;
+    let enable_art = config.enable_art;
     let art_type = config.art_type;
 
     let info = format_package_info(package, cargo_version, lines);
@@ -49,7 +49,7 @@ fn format_package_info(package: &Package, cargo_version: &str, lines: usize) -> 
 // Prints the ASCII art and package information side by side.
 fn print_art(info: &[String], enable_art: bool, art_type: String) {
     //let color = Color::Rgb(247, 76, 0);
-    if !enable_art {
+    if enable_art {
         for line in info {
             println!("{}", line);
         }
