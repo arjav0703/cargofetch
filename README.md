@@ -67,6 +67,11 @@ The binary will be located in the target/release/ directory.
 ## Acknowledgements
 This projcet was inspired by [neofetch](https://en.wikipedia.org/wiki/Neofetch) and [onefetch](https://onefetch.dev). Also, the ASCII art logo was also taken from onefetch.
 
-## License
-
-This project is licensed under the MIT License - see the LICENSE.md file for details.
+---
+<div align="center">
+  <a href="https://shipwrecked.hackclub.com/?t=ghrm" target="_blank">
+    <img src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/739361f1d440b17fc9e2f74e49fc185d86cbec14_badge.png" 
+         alt="This project is part of Shipwrecked, the world's first hackathon on an island!" 
+         style="width: 35%;">
+  </a>
+</div>
