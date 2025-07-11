@@ -7,8 +7,8 @@ use crate::config::save_config;
 use crate::size;
 use crate::structure::Package;
 use clap::Parser;
-use owo_colors::colors::CustomColor;
 use owo_colors::OwoColorize;
+use owo_colors::colors::CustomColor;
 
 /// Handler for displaying package information in ASCII art format.
 pub fn handler(package: &Package, cargo_version: &str) {
@@ -65,7 +65,7 @@ fn print_art(info: &[String], enable_art: bool, art_type: String) {
     //let color = Color::Rgb(247, 76, 0);
     if !enable_art {
         for line in info {
-            println!("{}", line);
+            println!("{line}");
         }
         return;
     }
@@ -95,7 +95,7 @@ fn art_gen(art_type: &str, enable_art: bool) -> String {
         "crab" => crab_art(),
         "rust" => rust_art(),
         _ => {
-            eprintln!("Unknown art type: {}. Defaulting to crab art.", art_type);
+            eprintln!("Unknown art type: {art_type}. Defaulting to crab art.");
             crab_art()
         }
     }

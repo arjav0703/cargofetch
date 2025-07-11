@@ -20,6 +20,7 @@ impl Default for Config {
 
 use directories::ProjectDirs;
 
+/// Returns the path to the configuration file.
 fn config_path() -> std::path::PathBuf {
     let proj = ProjectDirs::from("github", "arjav0703", "cargofetch")
         .expect("couldn't find a home directory");
@@ -29,6 +30,7 @@ fn config_path() -> std::path::PathBuf {
 use std::{fs, io};
 use toml;
 
+/// Loads the configuration from the config file, creating it with default values if it does not exist.
 pub fn load_config() -> io::Result<Config> {
     let path = config_path();
 
@@ -48,6 +50,7 @@ pub fn load_config() -> io::Result<Config> {
     Ok(cfg)
 }
 
+/// Saves the configuration to the config file.
 pub fn save_config(cfg: &Config) -> io::Result<()> {
     let toml = toml::to_string_pretty(cfg).expect("serialize config");
     fs::write(config_path(), toml)
