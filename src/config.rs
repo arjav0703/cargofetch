@@ -1,4 +1,5 @@
 use crate::cli::{art_status, art_type};
+use crate::structure::ArtType;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -6,7 +7,7 @@ pub struct Config {
     #[serde(default)]
     pub enable_art: bool,
     #[serde(default)]
-    pub art_type: String,
+    pub art_type: ArtType,
 }
 
 impl Default for Config {

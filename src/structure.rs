@@ -1,4 +1,11 @@
+use clap::ValueEnum;
 use serde::Deserialize;
+
+#[derive(Debug, ValueEnum, Clone)]
+pub enum ArtType {
+    Crab,
+    Rust,
+}
 
 #[derive(Debug, Deserialize)]
 pub struct CargoMetadata {

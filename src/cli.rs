@@ -1,10 +1,5 @@
-use clap::{Parser, ValueEnum};
-
-#[derive(Debug, ValueEnum, Clone)]
-pub enum ArtType {
-    Crab,
-    Rust,
-}
+use crate::structure::ArtType;
+use clap::Parser;
 
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
@@ -23,12 +18,9 @@ pub fn art_status() -> bool {
 }
 
 /// Returns the type of art to be displayed ('crab' or 'rust')
-pub fn art_type() -> String {
+pub fn art_type() -> ArtType {
     let args = Cli::parse();
-    match args.art_type.unwrap_or(ArtType::Crab) {
-        ArtType::Crab => "crab".to_string(),
-        ArtType::Rust => "rust".to_string(),
-    }
+    args.art_type.unwrap_or(ArtType::Crab)
 }
 pub fn init() {
     let _ = Cli::parse();

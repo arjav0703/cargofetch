@@ -1,34 +1,31 @@
 //use crate::cli::art_status;
 //use crate::cli::ArtType;
-use crate::cli::ArtType;
 use crate::cli::Cli;
 use crate::config::load_config;
 use crate::config::save_config;
 use crate::size;
+use crate::structure::ArtType;
 use crate::structure::Package;
+use anyhow::Result;
 use clap::Parser;
 use owo_colors::OwoColorize;
 use owo_colors::colors::CustomColor;
 
 /// Handler for displaying package information in ASCII art format.
-pub fn handler(package: &Package, cargo_version: &str) {
+pub fn handler(package: &Package, cargo_version: &str) -> Result<()> {
     let cli = Cli::parse();
 
-    let mut cfg = load_config().expect("Internal Error: Failed to load config");
+    let mut cfg = load_config()?;
 
     cfg.enable_art = !cli.disable_art;
-    if let Some(at) = cli.art_type {
-        cfg.art_type = match at {
-            ArtType::Crab => "crab".into(),
-            ArtType::Rust => "rust".into(),
-        };
-    }
 
-    save_config(&cfg).expect("Internal Error: Failed to save config");
+    save_config(&cfg)?;
 
     let lines = size::get_lines();
     let info = format_package_info(package, cargo_version, lines);
     print_art(&info, cfg.enable_art, cfg.art_type);
+
+    Ok(())
 }
 
 /// Formats the package information into a vector of strings for display.
@@ -60,7 +57,7 @@ fn format_package_info(package: &Package, cargo_version: &str, lines: usize) -> 
 }
 
 // Prints the ASCII art and package information side by side.
-fn print_art(info: &[String], enable_art: bool, art_type: String) {
+fn print_art(info: &[String], enable_art: bool, art_type: ArtType) {
     //dbg!(enable_art);
     //let color = Color::Rgb(247, 76, 0);
     if !enable_art {
@@ -70,7 +67,7 @@ fn print_art(info: &[String], enable_art: bool, art_type: String) {
         return;
     }
 
-    let ascii_art = art_gen(&art_type, enable_art);
+    let ascii_art = art_gen(art_type, enable_art);
     let ascii_lines: Vec<&str> = ascii_art.trim_matches('\n').lines().collect();
 
     for (art_line, side_text) in ascii_lines
@@ -86,18 +83,14 @@ fn print_art(info: &[String], enable_art: bool, art_type: String) {
 }
 
 /// Returns the ascii_art as a string based on the art_type provided.
-fn art_gen(art_type: &str, enable_art: bool) -> String {
+fn art_gen(art_type: ArtType, enable_art: bool) -> String {
     //dbg!(art_type);
     if !enable_art {
         return String::new();
     }
     match art_type {
-        "crab" => crab_art(),
-        "rust" => rust_art(),
-        _ => {
-            eprintln!("Unknown art type: {art_type}. Defaulting to crab art.");
-            crab_art()
-        }
+        ArtType::Crab => crab_art(),
+        ArtType::Rust => rust_art(),
     }
 }
 
