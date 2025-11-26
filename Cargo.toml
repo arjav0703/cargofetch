@@ -9,6 +9,7 @@ license = "MIT"
 repository = "https://github.com/arjav0703/rust-fetch"
 
 [dependencies]
+anyhow = "1.0.100"
 clap = { version = "4.5.38", features = ["derive"] }
 directories = "6.0.0"
 owo-colors = "4.2.1"
