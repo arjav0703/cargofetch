@@ -1,10 +1,16 @@
 use clap::ValueEnum;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
-#[derive(Debug, ValueEnum, Clone)]
+#[derive(Debug, ValueEnum, Clone, Serialize, Deserialize)]
 pub enum ArtType {
     Crab,
     Rust,
+}
+
+impl Default for ArtType {
+    fn default() -> Self {
+        ArtType::Crab
+    }
 }
 
 #[derive(Debug, Deserialize)]
