@@ -22,32 +22,75 @@ pub fn handler(package: &Package, cargo_version: &str) -> Result<()> {
     save_config(&cfg)?;
 
     let lines = size::get_lines();
-    let info = format_package_info(package, cargo_version, lines);
+    let info = format_package_info(PackageInfo {
+        cargo_version,
+        package,
+        lines,
+        git_commits: get_commits()?,
+    });
+
     print_art(&info, cfg.enable_art, cfg.art_type);
 
     Ok(())
 }
 
+/// Gets the number of commits in the repository
+fn get_commits() -> Result<usize> {
+    use std::process::Command;
+
+    let output = Command::new("git")
+        .args(["rev-list", "--count", "HEAD"])
+        .output()?;
+
+    if output.status.success() {
+        let count_str = String::from_utf8_lossy(&output.stdout);
+        let count = count_str.trim().parse::<usize>()?;
+        Ok(count)
+    } else {
+        Err(anyhow::anyhow!(
+            "Failed to get commit count: {}",
+            String::from_utf8_lossy(&output.stderr)
+        ))
+    }
+}
+
+struct PackageInfo<'a> {
+    cargo_version: &'a str,
+    package: &'a Package,
+    lines: usize,
+    git_commits: usize,
+}
+
 /// Formats the package information into a vector of strings for display.
-fn format_package_info(package: &Package, cargo_version: &str, lines: usize) -> Vec<String> {
+fn format_package_info(info: PackageInfo) -> Vec<String> {
     let fields = [
-        ("Cargo Version:", cargo_version),
-        ("Package:", package.name.as_str()),
-        ("Version:", package.version.as_str()),
+        ("Cargo Version:", info.cargo_version),
+        ("Package:", info.package.name.as_str()),
+        ("Version:", info.package.version.as_str()),
         (
             "Description:",
-            package.description.as_deref().unwrap_or("none"),
+            info.package.description.as_deref().unwrap_or("none"),
         ),
-        ("Authors:", &package.authors.join(", ")),
-        ("Dependencies:", &package.dependencies.len().to_string()),
-        ("Lines of Code:", &lines.to_string()),
-        ("Repo:", package.repository.as_deref().unwrap_or("none")),
+        ("Authors:", &info.package.authors.join(", ")),
+        (
+            "Dependencies:",
+            &info.package.dependencies.len().to_string(),
+        ),
+        ("Lines of Code:", &info.lines.to_string()),
+        (
+            "Repo:",
+            info.package.repository.as_deref().unwrap_or("none"),
+        ),
         (
             "Documentation:",
-            package.documentation.as_deref().unwrap_or("none"),
+            info.package.documentation.as_deref().unwrap_or("none"),
         ),
-        ("License:", package.license.as_deref().unwrap_or("none")),
-        ("Edition:", package.edition.as_str()),
+        (
+            "License:",
+            info.package.license.as_deref().unwrap_or("none"),
+        ),
+        ("Edition:", info.package.edition.as_str()),
+        ("Git Commits:", &info.git_commits.to_string()),
     ];
 
     fields
@@ -67,7 +110,7 @@ fn print_art(info: &[String], enable_art: bool, art_type: ArtType) {
         return;
     }
 
-    let ascii_art = art_gen(art_type, enable_art);
+    let ascii_art = art_gen(art_type , enable_art);
     let ascii_lines: Vec<&str> = ascii_art.trim_matches('\n').lines().collect();
 
     for (art_line, side_text) in ascii_lines

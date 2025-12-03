@@ -2,6 +2,7 @@ use clap::ValueEnum;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, ValueEnum, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "lowercase")]
 pub enum ArtType {
     Crab,
     Rust,
