@@ -17,12 +17,12 @@ pub fn get_lines() -> usize {
     let mut total_lines = 0;
 
     for entry in WalkDir::new(folder_path).into_iter().filter_map(Result::ok) {
-        if let Some(extension) = entry.path().extension().and_then(|s| s.to_str()) {
-            if extension == "rs" {
-                match count_lines_in_file(entry.path()) {
-                    Ok(lines) => total_lines += lines,
-                    Err(e) => eprintln!("Error reading file {}: {}", entry.path().display(), e),
-                }
+        if let Some(extension) = entry.path().extension().and_then(|s| s.to_str())
+            && extension == "rs"
+        {
+            match count_lines_in_file(entry.path()) {
+                Ok(lines) => total_lines += lines,
+                Err(e) => eprintln!("Error reading file {}: {}", entry.path().display(), e),
             }
         }
     }

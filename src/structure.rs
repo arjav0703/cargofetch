@@ -63,16 +63,19 @@ pub struct Dependency {
     pub public: Option<bool>,
 }
 
+#[allow(dead_code)]
 #[derive(Debug, Deserialize)]
 pub struct PackageMetadata {
     docs: Option<DocsRsMetadata>,
 }
 
+#[allow(dead_code)]
 #[derive(Debug, Deserialize)]
 pub struct DocsRsMetadata {
     rs: Option<DocsRsAllFeatures>,
 }
 
+#[allow(dead_code)]
 #[derive(Debug, Deserialize)]
 pub struct DocsRsAllFeatures {
     #[serde(rename = "all-features")]
