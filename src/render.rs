@@ -15,9 +15,12 @@ use owo_colors::colors::CustomColor;
 pub fn handler(package: &Package, cargo_version: &str) -> Result<()> {
     let cli = Cli::parse();
 
-    let mut cfg = load_config()?;
+    let mut cfg = load_config().unwrap_or_default();
 
     cfg.enable_art = !cli.disable_art;
+    if let Some(art_type) = cli.art_type {
+        cfg.art_type = art_type;
+    }
 
     save_config(&cfg)?;
 
@@ -110,7 +113,7 @@ fn print_art(info: &[String], enable_art: bool, art_type: ArtType) {
         return;
     }
 
-    let ascii_art = art_gen(art_type , enable_art);
+    let ascii_art = art_gen(art_type, enable_art);
     let ascii_lines: Vec<&str> = ascii_art.trim_matches('\n').lines().collect();
 
     for (art_line, side_text) in ascii_lines

@@ -10,7 +10,7 @@ pub enum ArtType {
 
 impl Default for ArtType {
     fn default() -> Self {
-        ArtType::Crab
+        ArtType::Rust
     }
 }
 
