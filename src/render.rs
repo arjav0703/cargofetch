@@ -24,11 +24,11 @@ pub fn handler(package: &Package, cargo_version: &str) -> Result<()> {
 
     save_config(&cfg)?;
 
-    let lines = size::get_lines();
+    let size = size::get_size();
     let info = format_package_info(PackageInfo {
         cargo_version,
         package,
-        lines,
+        size,
         git_commits: get_commits()?,
     });
 
@@ -60,12 +60,22 @@ fn get_commits() -> Result<usize> {
 struct PackageInfo<'a> {
     cargo_version: &'a str,
     package: &'a Package,
-    lines: usize,
+    size: size::Size,
     git_commits: usize,
 }
 
 /// Formats the package information into a vector of strings for display.
 fn format_package_info(info: PackageInfo) -> Vec<String> {
+    let authors = info.package.authors.join(", ");
+    let dependencies = info.package.dependencies.len().to_string();
+    let lines = info.size.lines().to_string();
+    let file_size = format!(
+        "{}kB ({}files)",
+        info.size.filesize(),
+        info.size.number_of_files()
+    );
+    let commits = info.git_commits.to_string();
+    
     let fields = [
         ("Cargo Version:", info.cargo_version),
         ("Package:", info.package.name.as_str()),
@@ -74,12 +84,10 @@ fn format_package_info(info: PackageInfo) -> Vec<String> {
             "Description:",
             info.package.description.as_deref().unwrap_or("none"),
         ),
-        ("Authors:", &info.package.authors.join(", ")),
-        (
-            "Dependencies:",
-            &info.package.dependencies.len().to_string(),
-        ),
-        ("Lines of Code:", &info.lines.to_string()),
+        ("Authors:", authors.as_str()),
+        ("Dependencies:", dependencies.as_str()),
+        ("Lines of Code:", lines.as_str()),
+        ("File Size:", file_size.as_str()),
         (
             "Repo:",
             info.package.repository.as_deref().unwrap_or("none"),
@@ -93,7 +101,7 @@ fn format_package_info(info: PackageInfo) -> Vec<String> {
             info.package.license.as_deref().unwrap_or("none"),
         ),
         ("Edition:", info.package.edition.as_str()),
-        ("Git Commits:", &info.git_commits.to_string()),
+        ("Git Commits:", commits.as_str()),
     ];
 
     fields
