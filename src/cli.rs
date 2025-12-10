@@ -9,19 +9,32 @@ pub struct Cli {
 
     #[arg(long, value_enum)]
     pub art_type: Option<ArtType>,
-}
-/// Returns false if art is allowed (default_value = false)
-pub fn art_status() -> bool {
-    let args = Cli::parse();
 
-    args.disable_art
+    #[arg(long, short)]
+    pub update: bool,
 }
 
-/// Returns the type of art to be displayed ('crab' or 'rust')
-pub fn art_type() -> ArtType {
-    let args = Cli::parse();
-    args.art_type.unwrap_or(ArtType::Crab)
-}
-pub fn init() {
-    let _ = Cli::parse();
+pub struct Terminal;
+
+impl Terminal {
+    /// Returns false if art is allowed (default_value = false)
+    pub fn art_status() -> bool {
+        let args = Cli::parse();
+
+        args.disable_art
+    }
+
+    pub fn update_status() -> bool {
+        let args = Cli::parse();
+
+        args.update
+    }
+
+    pub fn art_type() -> ArtType {
+        let args = Cli::parse();
+        args.art_type.unwrap_or(ArtType::Crab)
+    }
+    pub fn init() {
+        let _ = Cli::parse();
+    }
 }

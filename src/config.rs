@@ -1,4 +1,4 @@
-use crate::cli::{art_status, art_type};
+use crate::cli::Terminal;
 use crate::structure::ArtType;
 use serde::{Deserialize, Serialize};
 
@@ -13,8 +13,8 @@ pub struct Config {
 impl Default for Config {
     fn default() -> Self {
         Config {
-            enable_art: art_status(),
-            art_type: art_type(),
+            enable_art: Terminal::art_status(),
+            art_type: Terminal::art_type(),
         }
     }
 }
