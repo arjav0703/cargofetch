@@ -9,9 +9,6 @@ pub struct Cli {
 
     #[arg(long, value_enum)]
     pub art_type: Option<ArtType>,
-
-    #[arg(long, short)]
-    pub update: bool,
 }
 
 pub struct Terminal;
@@ -22,12 +19,6 @@ impl Terminal {
         let args = Cli::parse();
 
         args.disable_art
-    }
-
-    pub fn update_status() -> bool {
-        let args = Cli::parse();
-
-        args.update
     }
 
     pub fn art_type() -> ArtType {

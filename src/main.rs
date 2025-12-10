@@ -7,15 +7,8 @@ pub mod parse;
 pub mod render;
 pub mod size;
 pub mod structure;
-mod update;
 
 fn main() -> Result<()> {
-    let update = cli::Terminal::update_status();
-    if update {
-        update::update()?;
-        return Ok(());
-    }
-
     checks::env_check()?;
 
     let metadata = parse::get_metadata()?;
