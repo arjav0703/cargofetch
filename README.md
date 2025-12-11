@@ -39,12 +39,6 @@ If you are using Nix, you can install cargofetch using flakes:
 nix profile install github:arjav0703/cargofetch
 ```
 
-#### 📁 Download Binary
-Automatic:
-```bash
-curl -fsSL https://raw.githubusercontent.com/arjav0703/cargofetch/refs/heads/v1/install-bin.sh | bash
-```
-
 Manual:
 You can download the pre-built binary for your platform from the [releases page](https://github.com/arjav0703/cargofetch/releases).
 
