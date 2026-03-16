@@ -29,7 +29,6 @@ fn config_path() -> std::path::PathBuf {
 }
 
 use std::{fs, io};
-use toml;
 
 /// Loads the configuration from the config file, creating it with default values if it does not exist.
 pub fn load_config() -> io::Result<Config> {

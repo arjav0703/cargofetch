@@ -1,12 +1,7 @@
 use anyhow::Result;
-
-mod checks;
-pub mod cli;
-pub mod config;
-pub mod parse;
-pub mod render;
-pub mod size;
-pub mod structure;
+use cargofetch::checks;
+use cargofetch::parse;
+use cargofetch::render;
 
 fn main() -> Result<()> {
     checks::env_check()?;

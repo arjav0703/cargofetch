@@ -8,8 +8,8 @@ use crate::structure::ArtType;
 use crate::structure::Package;
 use anyhow::Result;
 use clap::Parser;
-use owo_colors::OwoColorize;
 use owo_colors::colors::CustomColor;
+use owo_colors::OwoColorize;
 
 /// Handler for displaying package information in ASCII art format.
 pub fn handler(package: &Package, cargo_version: &str) -> Result<()> {
@@ -57,15 +57,39 @@ fn get_commits() -> Result<usize> {
     }
 }
 
-struct PackageInfo<'a> {
-    cargo_version: &'a str,
-    package: &'a Package,
-    size: size::Size,
-    git_commits: usize,
+pub struct PackageInfo<'a> {
+    pub(crate) cargo_version: &'a str,
+    pub(crate) package: &'a Package,
+    pub(crate) size: size::Size,
+    pub(crate) git_commits: usize,
+}
+
+/// Combines ASCII art and formatted package info into a single `Vec<String>` for display.
+pub fn format_with_art(info: PackageInfo, art_type: ArtType) -> Vec<String> {
+    let info_lines = format_package_info(info);
+    let ascii_art = art_gen(art_type, true);
+    let ascii_lines: Vec<&str> = ascii_art.trim_matches('\n').lines().collect();
+
+    ascii_lines
+        .iter()
+        .zip(
+            info_lines
+                .iter()
+                .map(|s| s.as_str())
+                .chain(std::iter::repeat("")),
+        )
+        .map(|(art_line, side_text)| {
+            format!(
+                "{:<40}  {}",
+                art_line.fg::<CustomColor<247, 76, 0>>(),
+                side_text
+            )
+        })
+        .collect()
 }
 
 /// Formats the package information into a vector of strings for display.
-fn format_package_info(info: PackageInfo) -> Vec<String> {
+pub fn format_package_info(info: PackageInfo) -> Vec<String> {
     let authors = info.package.authors.join(", ");
     let dependencies = info.package.dependencies.len().to_string();
     let lines = info.size.lines().to_string();
@@ -75,7 +99,7 @@ fn format_package_info(info: PackageInfo) -> Vec<String> {
         info.size.number_of_files()
     );
     let commits = info.git_commits.to_string();
-    
+
     let fields = [
         ("Cargo Version:", info.cargo_version),
         ("Package:", info.package.name.as_str()),
